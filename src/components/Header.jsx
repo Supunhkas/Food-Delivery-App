@@ -4,7 +4,12 @@ import Avatar from "../assets/img/avatar.png";
 import { MdShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  checkActionCode,
+} from "firebase/auth";
 import { app } from "../firebace.config";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
@@ -43,7 +48,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed w-screen z-50  p-3 px-4 md:p-6 md:px-16">
+    <header className="fixed w-screen z-50  p-3 px-4 md:p-6 md:px-16 bg-primary">
       {/* desktop and tablet */}
       <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to={"/"} className="flex items-center gap-2">
