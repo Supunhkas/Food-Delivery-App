@@ -10,7 +10,7 @@ import {
   GoogleAuthProvider,
   checkActionCode,
 } from "firebase/auth";
-import { app } from "../firebace.config";
+import { app } from "../firebase.config";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 
