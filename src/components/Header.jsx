@@ -95,7 +95,10 @@ const Header = () => {
               >
                 {user && user.email === "supunharshana36@gmail.com" && (
                   <Link to={"/createItem"}>
-                    <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out ">
+                    <p
+                      className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out "
+                      onClick={() => setisMenu(false)}
+                    >
                       Ne Item <MdAdd />
                     </p>
                   </Link>
@@ -143,23 +146,38 @@ const Header = () => {
             >
               {user && user.email === "supunharshana36@gmail.com" && (
                 <Link to={"/createItem"}>
-                  <p className="px-4 py-2 flex items-center cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out ">
+                  <p
+                    className="px-4 py-2 flex items-center cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out "
+                    onClick={() => setisMenu(false)}
+                  >
                     Ne Item <MdAdd />
                   </p>
                 </Link>
               )}
 
               <ul className="flex flex-col ">
-                <li className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2">
+                <li
+                  className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2"
+                  onClick={() => setisMenu(false)}
+                >
                   Menu
                 </li>
-                <li className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2">
+                <li
+                  className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2"
+                  onClick={() => setisMenu(false)}
+                >
                   Home
                 </li>
-                <li className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2">
+                <li
+                  className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2"
+                  onClick={() => setisMenu(false)}
+                >
                   About us
                 </li>
-                <li className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2">
+                <li
+                  className="text-base text-textColor hover:bg-slate-100 duration-100 transition-all ease-in-out cursor-pointer px-4 py-2"
+                  onClick={() => setisMenu(false)}
+                >
                   Services
                 </li>
               </ul>
