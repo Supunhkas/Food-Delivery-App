@@ -17,7 +17,9 @@ import {
   uplodBytesResumable,
 } from "firebase/storage";
 import { storage } from "../firebase.config";
-import { saveItems } from "../utils/firebaseFunction";
+import { gettAllFoodItems, saveItems } from "../utils/firebaseFunction";
+import { actionType } from "../context/reducer";
+import { useStateValue } from "../context/StateProvider";
 
 const CreateContainer = () => {
   const [title, setTitle] = useState("");
@@ -29,6 +31,7 @@ const CreateContainer = () => {
   const [msg, setMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [imageAsset, setImageAsset] = useState(null);
+  const [{}, dispatch] = useStateValue();
 
   const uploadImage = (e) => {
     setIsLoading(true);
@@ -43,7 +46,6 @@ const CreateContainer = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       },
       (error) => {
-        console.log(error);
         setFields(true);
         setMsg("Error while uploading : try again");
         setAlertStatus("danger");
@@ -120,6 +122,8 @@ const CreateContainer = () => {
         setIsLoading(isLoading);
       }, 4000);
     }
+
+    fetchData();
   };
 
   const clearData = () => {
@@ -128,6 +132,15 @@ const CreateContainer = () => {
     setCalories("");
     setPrice("");
     setCategory("Select Category");
+  };
+
+  const fetchData = async () => {
+    await gettAllFoodItems().then((data) => {
+      dispatch({
+        type: actionType.SET_FOOD_ITEMS,
+        foodItems: data,
+      });
+    });
   };
 
   return (
@@ -211,10 +224,10 @@ const CreateContainer = () => {
                     />
                     <button
                       type="button"
-                      className="absolute bg-red-500 text-xl cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out"
+                      className="absolute bg-red-500 text-xl rounded-full right-3 bottom-3 p-3 cursor-pointer outline-none hover:shadow-md duration-500 transition-all ease-in-out"
                       onClick={deleteImage}
                     >
-                      <MdDelete className="text-white" />
+                      <MdDelete className="text-white " />
                     </button>
                   </div>
                 </>

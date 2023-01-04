@@ -96,10 +96,10 @@ const Header = () => {
                 {user && user.email === "supunharshana36@gmail.com" && (
                   <Link to={"/createItem"}>
                     <p
-                      className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out "
+                      className="px-3 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out "
                       onClick={() => setisMenu(false)}
                     >
-                      Ne Item <MdAdd />
+                      New Item <MdAdd />
                     </p>
                   </Link>
                 )}
