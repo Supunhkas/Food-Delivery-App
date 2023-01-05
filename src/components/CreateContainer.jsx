@@ -36,7 +36,7 @@ const CreateContainer = () => {
   const uploadImage = (e) => {
     setIsLoading(true);
     const imageFile = e.target.files[0];
-    const storageRef = ref(storage, `Images/${Date.now()} -${imageFile.name}`);
+    const storageRef = ref(storage, `Images/${Date.now()}-${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
 
     uploadTask.on(
@@ -85,7 +85,7 @@ const CreateContainer = () => {
   const saveDetails = () => {
     setIsLoading(true);
     try {
-      if (!title || !imageAsset || !price || !category) {
+      if (!title || !calories || !imageAsset || !price || !category) {
         setFields(true);
         setMsg("Required fields can't be empty");
         setAlertStatus("danger");
@@ -97,9 +97,10 @@ const CreateContainer = () => {
         const data = {
           id: `${Date.now()}`,
           title: title,
+          imageURL: imageAsset,
           category: category,
           calories: calories,
-          VideoPlaybackQuality: 1,
+          qty: 1,
           price: price,
         };
         saveItems(data);
@@ -131,7 +132,7 @@ const CreateContainer = () => {
     setImageAsset(null);
     setCalories("");
     setPrice("");
-    setCategory("Select Category");
+    // setCategory("Select Category");
   };
 
   const fetchData = async () => {
