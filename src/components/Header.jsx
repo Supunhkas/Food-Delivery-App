@@ -18,7 +18,7 @@ const Header = () => {
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
 
   const [isMenu, setisMenu] = useState(false);
 
@@ -47,6 +47,14 @@ const Header = () => {
     });
   };
 
+  const showCart = () => {
+    dispatch({
+      type: actionType.SET_CART_SHOW,
+      user: !cartShow,
+    });
+    console.log("hii");
+  };
+
   return (
     <header className="fixed w-screen z-50  p-3 px-4 md:p-6 md:px-16 bg-primary">
       {/* desktop and tablet */}
@@ -72,10 +80,15 @@ const Header = () => {
           </ul>
 
           <div className="relative flex items-center justify-center ">
-            <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer" />
-            <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-              <p className="text-xs text-white font-semibold">3 </p>
-            </div>
+            <MdShoppingBasket
+              className="text-textColor text-2xl ml-8 cursor-pointer"
+              onClick={showCart}
+            />
+            {cartItems && cartItems.length > 0 && (
+              <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+                <p className="text-xs text-white font-semibold">3 </p>
+              </div>
+            )}
           </div>
 
           <div className="relative ">
@@ -117,11 +130,16 @@ const Header = () => {
 
       {/* mobile */}
       <div className="flex md:hidden items-center justify-between w-full h-full">
-        <div className="relative flex items-center justify-center ">
+        <div
+          className="relative flex items-center justify-center "
+          onClick={showCart}
+        >
           <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer" />
-          <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-            <p className="text-xs text-white font-semibold">3 </p>
-          </div>
+          {cartItems && cartItems.length > 0 && (
+            <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
+              <p className="text-xs text-white font-semibold">3 </p>
+            </div>
+          )}
         </div>
 
         <Link to={"/"} className="flex items-center gap-2">
