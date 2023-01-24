@@ -4,12 +4,7 @@ import Avatar from "../assets/img/avatar.png";
 import { MdShoppingBasket, MdAdd, MdLogout } from "react-icons/md";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  checkActionCode,
-} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "../firebase.config";
 import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
@@ -39,6 +34,7 @@ const Header = () => {
 
   const logout = () => {
     setisMenu(false);
+    firebaseAuth.signOut();
     localStorage.clear();
 
     dispatch({
@@ -50,9 +46,8 @@ const Header = () => {
   const showCart = () => {
     dispatch({
       type: actionType.SET_CART_SHOW,
-      user: !cartShow,
+      cartShow: !cartShow,
     });
-    console.log("hii");
   };
 
   return (
@@ -86,7 +81,7 @@ const Header = () => {
             />
             {cartItems && cartItems.length > 0 && (
               <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-                <p className="text-xs text-white font-semibold">3 </p>
+                <p className="text-xs text-white font-semibold">1</p>
               </div>
             )}
           </div>
@@ -137,7 +132,7 @@ const Header = () => {
           <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer" />
           {cartItems && cartItems.length > 0 && (
             <div className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center">
-              <p className="text-xs text-white font-semibold">3 </p>
+              <p className="text-xs text-white font-semibold">1 </p>
             </div>
           )}
         </div>

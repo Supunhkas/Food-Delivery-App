@@ -1,9 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BiMinus, BiPlus } from "react-icons/bi";
 import { motion } from "framer-motion";
-const CartItem = (item) => {
+import { useState } from "react";
+import { useStateValue } from "../context/StateProvider";
+import { actionType } from "../context/reducer";
+
+const CartItem = ({ item }) => {
+  const [qty, setQty] = useState(item.qty);
+  const [state, dispatch] = useStateValue();
+
+  // const cartDispatch = () => {
+  //   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  //   dispatch({
+  //     type: actionType.SET_CART,
+  //     cartItems: cartItems,
+  //   });
+  // };
+
+  const updateQty = (action, id) => {
+    if (action === "add") {
+      setQty(qty + 1);
+      dispatch({
+        type: actionType.SET_CART,
+        cartItems: state.cartItems.map((item) => {
+          if (item.id === id) {
+            item.qty += 1;
+          }
+          return item;
+        }),
+      });
+    } else {
+      if (qty === 1) {
+        dispatch({
+          type: actionType.SET_CART,
+          cartItems: state.cartItems.filter((item) => item.id !== id),
+        });
+      } else {
+        setQty(qty - 1);
+        dispatch({
+          type: actionType.SET_CART,
+          cartItems: state.cartItems.map((item) => {
+            if (item.id === id) {
+              item.qty -= 1;
+            }
+            return item;
+          }),
+        });
+      }
+    }
+  };
+
+  useEffect(() => {
+    setQty(item.qty);
+  }, [item.qty]);
+
   return (
-    <div className="w-full h-340 md:h-42 px-6 py-10 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
+    <div className="w-full h-340 md:h-42 px-6 py-5 flex flex-col gap-2 overflow-y-scroll scrollbar-none">
       {/* cart items */}
       <div className="w-full p-1 px-2 rounded-lg bg-cartItem flex items-center gap-2">
         <img
@@ -15,11 +67,14 @@ const CartItem = (item) => {
         <div className="flex flex-col gap-2">
           <p className="text-base text-gray-50">{item?.title}</p>
           <p className="text-sm block text-gray-300 font-semibold">
-            $ {item?.price}
+            ${(item?.price ? parseFloat(item.price) : 0) * qty}
           </p>
         </div>
         <div className="group flex items-center gap-2 ml-auto cursor-pointer">
-          <motion.div whileTap={{ scale: 0.75 }}>
+          <motion.div
+            whileTap={{ scale: 0.75 }}
+            onClick={() => updateQty("reomeve", item?.id)}
+          >
             <BiMinus className="text-gray-50" />
           </motion.div>
 
@@ -27,7 +82,10 @@ const CartItem = (item) => {
             {item?.qty}
           </p>
 
-          <motion.div whileTap={{ scale: 0.75 }}>
+          <motion.div
+            whileTap={{ scale: 0.75 }}
+            onClick={() => updateQty("add", item?.id)}
+          >
             <BiPlus className="text-gray-50" />
           </motion.div>
         </div>

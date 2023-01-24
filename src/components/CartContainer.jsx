@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiRefreshFill } from "react-icons/ri";
 import { motion } from "framer-motion";
@@ -6,8 +6,11 @@ import { useStateValue } from "../context/StateProvider";
 import { actionType } from "../context/reducer";
 import EmptyCart from "../assets/img/emptyCart.svg";
 import CartItem from "./CartItem";
-const CartContainer = () => {
+import { useState } from "react";
+
+const CartContainer = ({ flag }) => {
   const [{ cartShow, cartItems, user }, dispatch] = useStateValue();
+  const [tot, setTot] = useState();
 
   const showCart = () => {
     dispatch({
@@ -15,6 +18,22 @@ const CartContainer = () => {
       cartShow: !cartShow,
     });
   };
+
+  useEffect(() => {
+    let totalPrice = cartItems.reduce(function (accumulator, item) {
+      return accumulator + item.qty * item.price;
+    }, 0);
+    setTot(totalPrice);
+  }, [cartItems, flag, tot]);
+
+  const clearCart = () => {
+    dispatch({
+      type: actionType.SET_CART_ITEMS,
+      cartItems: [],
+    });
+    setTot(0);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 200 }}
@@ -33,33 +52,32 @@ const CartContainer = () => {
           whileTap={{ scale: 0.75 }}
           className="flex items-center gap-2 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-textColor text-base"
         >
-          Clear <RiRefreshFill />
+          Clear <RiRefreshFill onClick={clearCart} />
         </motion.p>
       </div>
       {/* bottom section */}
       {cartItems && cartItems.length > 0 ? (
-        <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col">
+        <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col overflow-y-auto justify-between">
           {cartItems &&
-            cartItems.map((item) => <CartItem key={item.id} data={item} />)}
+            cartItems.map((item, i) => <CartItem key={i} item={item} />)}
+
           {/* total section */}
           <div className="w-full bg-cartTotal rounded-t-[2rem] flex flex-col items-center justify-evenly px-8 py-2">
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-400 text-lg"> Sub Total</p>
-              <p className="text-gray-400 text-lg"> $ 8.5</p>
+              <p className="text-gray-400 text-lg"> $ {tot}</p>
             </div>
-
             <div className="w-full flex items-center justify-between">
               <p className="text-gray-400 text-lg"> Delivery</p>
               <p className="text-gray-400 text-lg"> $ 5.5</p>
             </div>
-
             <div className=" w-full border-b border-gray-600 my-2"></div>
-
             <div className=" w-full flex justify-between items-center">
               <p className="text-gray-200 text-xl font-semibold">Total</p>
-              <p className="text-gray-200 text-xl font-semibold">$ 14</p>
+              <p className="text-gray-200 text-xl font-semibold">
+                $ {tot + 5.5}
+              </p>
             </div>
-
             {user ? (
               <motion.button
                 whileTap={{ scale: 0.8 }}
