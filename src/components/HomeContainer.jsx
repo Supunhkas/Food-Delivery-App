@@ -1,5 +1,6 @@
 import React from "react";
 import Delivery from "../assets/img/delivery.png";
+import Car from "../assets/img/Car.png";
 import HeroBG from "../assets/img/heroBg.png";
 import { heroData } from "../utils/data";
 
@@ -11,15 +12,29 @@ const HomeContainer = () => {
     >
       <div className=" py-2 flex-1 flex flex-col items-start justify-center md:items-start gap-6 ">
         <div className="flex items-center gap-2 justify-center bg-orange-100 px-2 py-1 rounded-full">
-          <p className="text-base text-orange-500 font-semibold ">
-            Bike Delivety
-          </p>
-          <div className="w-8 h-8 rounded-full overflow-hidden bg-white drop-shadow-xl">
-            <img
-              src={Delivery}
-              className="w-full h-full object-contain"
-              alt="bike"
-            />
+          <div className="flex flex-row gap-2 justify-center items-center px-2 ">
+            <p className="text-base text-orange-500 font-semibold ">
+              Bike Delivery
+            </p>
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-white drop-shadow-xl">
+              <img
+                src={Delivery}
+                className="w-full h-full object-contain"
+                alt="bike"
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-2 justify-center bg-orange-100 px-2 py-1 rounded-full">
+            <p className="text-base text-orange-500 font-semibold ">
+              Car Delivery
+            </p>
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-white drop-shadow-xl">
+              <img
+                src={Car}
+                className="w-full h-full object-contain"
+                alt="bike"
+              />
+            </div>
           </div>
         </div>
         <p className=" text-[2.5rem] lg:text-[4rem] font-bold tracking-wide text-headingColor ">

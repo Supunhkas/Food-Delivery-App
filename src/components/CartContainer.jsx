@@ -19,20 +19,21 @@ const CartContainer = ({ flag }) => {
     });
   };
 
-  useEffect(() => {
-    let totalPrice = cartItems.reduce(function (accumulator, item) {
-      return accumulator + item.qty * item.price;
-    }, 0);
-    setTot(totalPrice);
-  }, [cartItems, flag, tot]);
-
   const clearCart = () => {
     dispatch({
       type: actionType.SET_CART_ITEMS,
       cartItems: [],
     });
     setTot(0);
+    console.log("Cart has been cleared");
   };
+
+  useEffect(() => {
+    let totalPrice = cartItems.reduce(function (accumulator, item) {
+      return accumulator + item.qty * item.price;
+    }, 0);
+    setTot(totalPrice);
+  }, [cartItems, flag, tot]);
 
   return (
     <motion.div
@@ -51,10 +52,12 @@ const CartContainer = ({ flag }) => {
         <motion.p
           whileTap={{ scale: 0.75 }}
           className="flex items-center gap-2 px-2 my-2 bg-gray-100 rounded-md hover:shadow-md cursor-pointer text-textColor text-base"
+          onClick={clearCart}
         >
-          Clear <RiRefreshFill onClick={clearCart} />
+          Clear <RiRefreshFill />
         </motion.p>
       </div>
+
       {/* bottom section */}
       {cartItems && cartItems.length > 0 ? (
         <div className="w-full h-full bg-cartBg rounded-t-[2rem] flex flex-col overflow-y-auto justify-between">
